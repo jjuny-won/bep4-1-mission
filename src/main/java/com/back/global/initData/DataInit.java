@@ -1,9 +1,9 @@
-package com.back.initData;
+package com.back.global.initData;
 
-import com.back.entity.Member;
-import com.back.entity.Post;
-import com.back.service.MemberService;
-import com.back.service.PostService;
+import com.back.member.entity.Member;
+import com.back.post.entity.Post;
+import com.back.member.service.MemberService;
+import com.back.post.service.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;

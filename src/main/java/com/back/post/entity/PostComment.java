@@ -1,6 +1,7 @@
-package com.back.entity;
+package com.back.post.entity;
 
-import com.back.jpa.entity.BaseIdAndTime;
+import com.back.global.jpa.entity.BaseIdAndTime;
+import com.back.member.entity.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
