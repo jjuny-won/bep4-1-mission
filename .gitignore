@@ -38,5 +38,5 @@ out/
 
 ### Custom #拼＃
 db_dev.mv.db
-di_dev.trace.db
+db_dev.trace.db
 .env

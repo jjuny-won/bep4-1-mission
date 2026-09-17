@@ -31,7 +31,7 @@ public class Post extends BaseIdAndTime {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
-
+        author.increaseActivityScore(1);
         return postComment;
     }
     public boolean hasComments() {
