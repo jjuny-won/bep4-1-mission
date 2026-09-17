@@ -11,23 +11,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
-public class PostService {
+@RequiredArgsConstructor
+public class PostFacade {
     private final PostRepository postRepository;
-    private final EventPublisher eventPublisher;
+    private final PostWriteUseCase postWriteUseCase;
     public long count() {
         return postRepository.count();
     }
 
-    public Post write(Member author, String title, String content) {
-        Post post = postRepository.save(new Post(author, title, content));
-
-        eventPublisher.publish(new PostCreatedEvent(new PostDto(post)));
-        return post;
-    }
-
     public Optional<Post> findById(int id) {
         return postRepository.findById(id);
+    }
+
+    public Post write(Member author,String title, String content){
+        return postWriteUseCase.write(author, title, content);
     }
 }
