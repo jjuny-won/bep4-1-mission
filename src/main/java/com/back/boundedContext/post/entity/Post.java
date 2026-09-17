@@ -1,8 +1,11 @@
-package com.back.post.entity;
+package com.back.boundedContext.post.entity;
 
 import com.back.global.jpa.entity.BaseIdAndTime;
-import com.back.member.entity.Member;
+import com.back.boundedContext.member.entity.Member;
+import com.back.shared.post.dto.PostCommentDto;
+import com.back.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.CascadeType.REMOVE;
 
+@Getter
 @Entity
 @NoArgsConstructor
 public class Post extends BaseIdAndTime {
@@ -32,7 +36,7 @@ public class Post extends BaseIdAndTime {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
-        author.increaseActivityScore(1);
+        publishEvent(new PostCommentCreatedEvent(new PostCommentDto(postComment)));
         return postComment;
     }
     public boolean hasComments() {

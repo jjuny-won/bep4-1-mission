@@ -1,6 +1,6 @@
-package com.back.member.repository;
+package com.back.boundedContext.member.repository;
 
-import com.back.member.entity.Member;
+import com.back.boundedContext.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
