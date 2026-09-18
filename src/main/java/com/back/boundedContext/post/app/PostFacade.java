@@ -2,13 +2,15 @@ package com.back.boundedContext.post.app;
 
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
+import com.back.boundedContext.post.out.PostMemberRepository;
 import com.back.boundedContext.post.out.PostRepository;
-import com.back.global.eventPublisher.EventPublisher;
 import com.back.global.rsData.RsData;
-import com.back.shared.post.dto.PostDto;
-import com.back.shared.post.event.PostCreatedEvent;
+
+import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class PostFacade {
     private final PostRepository postRepository;
     private final PostWriteUseCase postWriteUseCase;
+    private final PostMemberRepository postMemberRepository;
     public long count() {
         return postRepository.count();
     }
@@ -27,5 +30,19 @@ public class PostFacade {
 
     public RsData<Post> write(Member author, String title, String content){
         return postWriteUseCase.write(author, title, content);
+    }
+    @Transactional
+    public PostMember syncMember(MemberDto member) {
+        PostMember _member = new PostMember(
+                member.getUsername(),
+                "",
+                member.getNickname()
+        );
+
+        _member.setId(member.getId());
+        _member.setCreateDate(member.getCreateDate());
+        _member.setModifyDate(member.getModifyDate());
+
+        return postMemberRepository.save(_member);
     }
 }
