@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 @Table(name="POST_MEMBER")
 @NoArgsConstructor
 public class PostMember extends ReplicaMember {
-    public PostMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname){
+    public PostMember(int id, LocalDateTime createDate, LocalDateTime modifyDate, String username, String password, String nickname, int activityScore){
         //부모 영역의 필드를 초기화시켜주는 것
-        super(id, createDate, modifyDate, username, password, nickname);
+        super(id, createDate, modifyDate, username, password, nickname,activityScore);
     }
 
 }

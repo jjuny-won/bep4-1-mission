@@ -12,8 +12,9 @@ public class MemberDto {
     private final int id;
     private final LocalDateTime createDate;
     private final LocalDateTime modifyDate;
-    private String username;
-    private String nickname;
+    private final String username;
+    private final String nickname;
+    private final int activityScore;
 
     public MemberDto(Member member) {
         this(
@@ -21,7 +22,8 @@ public class MemberDto {
                 member.getCreateDate(),
                 member.getModifyDate(),
                 member.getUsername(),
-                member.getNickname()
+                member.getNickname(),
+                member.getActivityScore()
         );
     }
 }
