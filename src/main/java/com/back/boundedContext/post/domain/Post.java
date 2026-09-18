@@ -17,6 +17,7 @@ import static jakarta.persistence.CascadeType.REMOVE;
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name="POST_POST")
 public class Post extends BaseIdAndTime {
     @ManyToOne(fetch = FetchType.LAZY)
     Member author;
