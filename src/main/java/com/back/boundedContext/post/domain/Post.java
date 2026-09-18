@@ -1,7 +1,6 @@
 package com.back.boundedContext.post.domain;
 
 import com.back.global.jpa.entity.BaseIdAndTime;
-import com.back.boundedContext.member.domain.Member;
 import com.back.shared.post.dto.PostCommentDto;
 import com.back.shared.post.event.PostCommentCreatedEvent;
 import jakarta.persistence.*;
@@ -20,20 +19,20 @@ import static jakarta.persistence.CascadeType.REMOVE;
 @Table(name="POST_POST")
 public class Post extends BaseIdAndTime {
     @ManyToOne(fetch = FetchType.LAZY)
-    Member author;
-    String title;
+    private PostMember author;
+    private String title;
     @Column(columnDefinition = "LONGTEXT")
-    String content;
+    private String content;
     @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
     private List<PostComment> comments = new ArrayList<>();
 
-    public Post(Member member, String title, String content) {
+    public Post(PostMember member, String title, String content) {
         this.author = member;
         this.title = title;
         this.content = content;
     }
 
-    public PostComment addComment (Member author, String content){
+    public PostComment addComment (PostMember author, String content){
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);

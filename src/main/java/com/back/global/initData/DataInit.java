@@ -4,6 +4,7 @@ import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
 import com.back.global.rsData.RsData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -50,9 +51,9 @@ public class DataInit {
     public void makeBasePosts() {
         if (postFacade.count() > 0) return;
 
-        Member user1Member = memberFacade.findByUsername("user1").get();
-        Member user2Member = memberFacade.findByUsername("user2").get();
-        Member user3Member = memberFacade.findByUsername("user3").get();
+        PostMember user1Member = postFacade.findByUsername("user1").get();
+        PostMember user2Member = postFacade.findByUsername("user2").get();
+        PostMember user3Member = postFacade.findByUsername("user3").get();
 
 //        postFacade.write()의 반환값인 RsData<Post>를 직접 받아 게시글 데이터뿐만 아니라 처리 결과 메시지도 활용할 수 있도록 수정
 
@@ -84,9 +85,9 @@ public class DataInit {
         Post post5 = postFacade.findById(5).get();
         Post post6 = postFacade.findById(6).get();
 
-        Member user1Member = memberFacade.findByUsername("user1").get();
-        Member user2Member = memberFacade.findByUsername("user2").get();
-        Member user3Member = memberFacade.findByUsername("user3").get();
+        PostMember user1Member = postFacade.findByUsername("user1").get();
+        PostMember user2Member = postFacade.findByUsername("user2").get();
+        PostMember user3Member = postFacade.findByUsername("user3").get();
 
         if (post1.hasComments()) return;
 

@@ -1,6 +1,5 @@
 package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
 import com.back.boundedContext.post.out.PostMemberRepository;
@@ -28,7 +27,7 @@ public class PostFacade {
         return postRepository.findById(id);
     }
 
-    public RsData<Post> write(Member author, String title, String content){
+    public RsData<Post> write(PostMember author, String title, String content){
         return postWriteUseCase.write(author, title, content);
     }
     @Transactional
@@ -45,4 +44,10 @@ public class PostFacade {
 
         return postMemberRepository.save(_member);
     }
+
+    @Transactional(readOnly = true)
+    public Optional<PostMember> findByUsername(String username) {
+        return postMemberRepository.findByUsername(username);
+    }
+
 }
