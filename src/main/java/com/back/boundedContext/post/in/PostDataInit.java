@@ -1,7 +1,6 @@
-package com.back.global.initData;
+package com.back.boundedContext.post.in;
 
-import com.back.boundedContext.member.app.MemberFacade;
-import com.back.boundedContext.member.domain.Member;
+
 import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
@@ -11,40 +10,28 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @Slf4j
-public class DataInit {
-    private final DataInit self;
-    private final MemberFacade memberFacade;
+public class PostDataInit {
 
     private final PostFacade postFacade;
-    public DataInit(@Lazy DataInit self, MemberFacade memberFacade, PostFacade postFacade) {
+    private final PostDataInit self;
+
+    public PostDataInit(@Lazy PostDataInit self, PostFacade postFacade) {
         this.self = self;
-        this.memberFacade = memberFacade;
         this.postFacade = postFacade;
     }
 
     @Bean
-    public ApplicationRunner baseInitDataRunner() {
+    @Order(2) //Beam 의 우선순위를 정하기 위함 - Member 후 Post 를 적용하기 위해
+    public ApplicationRunner postDataInitApplicationRunner() {
         return args -> {
-            self.makeBaseMembers();
             self.makeBasePosts();
             self.makeBasePostComments();
         };
-    }
-
-    @Transactional
-    public void makeBaseMembers() {
-        if (memberFacade.count() > 0) return;
-
-        Member systemMember = memberFacade.join("system", "1234", "시스템").getData();
-        Member holdingMember = memberFacade.join("holding", "1234", "홀딩").getData();
-        Member adminMember = memberFacade.join("admin", "1234", "관리자").getData();
-        Member user1Member = memberFacade.join("user1", "1234", "유저1").getData();
-        Member user2Member = memberFacade.join("user2", "1234", "유저2").getData();
-        Member user3Member = memberFacade.join("user3", "1234", "유저3").getData();
     }
 
     @Transactional
@@ -54,8 +41,6 @@ public class DataInit {
         PostMember user1Member = postFacade.findByUsername("user1").get();
         PostMember user2Member = postFacade.findByUsername("user2").get();
         PostMember user3Member = postFacade.findByUsername("user3").get();
-
-//        postFacade.write()의 반환값인 RsData<Post>를 직접 받아 게시글 데이터뿐만 아니라 처리 결과 메시지도 활용할 수 있도록 수정
 
         RsData<Post> post1RsData = postFacade.write(user1Member, "제목1", "내용1");
         log.debug(post1RsData.getMsg());
